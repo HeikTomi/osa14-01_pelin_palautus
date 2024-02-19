@@ -1,6 +1,7 @@
 # TEE PELI TÄHÄN
 import pygame
 import random
+import time
 
 class Npc:
     def __init__(self, x: int, y: int, image: str):
@@ -37,6 +38,7 @@ class Player(Npc):
         self.to_left = False
         self.to_up = False
         self.to_down = False
+        self.score_time = time.time()
         
     def move_player(self, swidth: int, sheight: int):
         if self.to_right:
@@ -56,9 +58,18 @@ class Player(Npc):
         
     def check_coin_collision(self, coin, maxwidth, maxheight):
         if self.check_collision(coin.rect):
-            self.score += 100
-            self.counter += 100
-            if self.counter >= 1000:
+            # Socre is based how fast you got to the coin countim 10seconds down to zero
+            t1 = time.time()
+            dt = t1-self.score_time
+            score = 10-int(dt) 
+            if score < 0:
+                score = 0
+                
+            self.score += score
+            self.counter += score
+            self.score_time = time.time() # rest timer
+
+            if self.counter >= 100: # every 100 points you level up
                 self.level += 1
                 self.counter = 0
                 self.speed += 0.5
@@ -83,7 +94,7 @@ class Game:
         self.screen = pygame.display.set_mode((self.swidth, self.sheight))
         self.panel_font = pygame.font.SysFont("Arial", 24)
         self.player = Player(self.swidth//2-25, self.sheight-85, "robo.png")
-        self.coin = Coin(random.randrange(self.swidth+50), 50, "kolikko.png") 
+        self.coin = Coin(random.randrange(self.swidth+50), 50, "kolikko.png")
              
     def input_events(self):  
         for event in pygame.event.get():

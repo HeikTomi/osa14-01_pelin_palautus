@@ -154,7 +154,7 @@ class Game:
             
     def move_monsters(self):
         for monster in self.monsters:
-            if random.randrange(100) < 10: # some randomness to movement
+            if random.randrange(100) < 25: # some randomness to movement
                 if monster.x < self.player.x:
                     monster.x += monster.speed
                 elif monster.x > self.player.x:

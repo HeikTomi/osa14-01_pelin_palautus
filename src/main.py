@@ -36,35 +36,7 @@ class Player(Npc):
             if not self.y >= sheight-self.image.get_height():
                 self.y += self.speed
         
-        self.rect.topleft = [self.x, self.y]
-        
-    def input_events(self, swidth: int, sheight: int):  
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    exit()
-                if event.key == pygame.K_LEFT:
-                    self.to_left = True
-                if event.key == pygame.K_RIGHT:
-                    self.to_right = True
-                if event.key == pygame.K_UP:
-                    self.to_up = True
-                if event.key == pygame.K_DOWN:
-                    self.to_down = True
-                                        
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.to_left = False
-                if event.key == pygame.K_RIGHT:
-                    self.to_right = False
-                if event.key == pygame.K_UP:
-                    self.to_up = False
-                if event.key == pygame.K_DOWN:
-                    self.to_down = False
-                    
-        self.move_player(swidth, sheight)
+        self.rect.topleft = [self.x, self.y]         
         
 class Game:
     def __init__(self):
@@ -73,8 +45,35 @@ class Game:
         self.sheight = 600
         self.fps = 120
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((self.swidth, self.sheight))           
-    
+        self.screen = pygame.display.set_mode((self.swidth, self.sheight))
+        self.color_black = (0,0,0)
+        
+    def input_events(self, player):  
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    exit()
+                if event.key == pygame.K_LEFT:
+                    player.to_left = True
+                if event.key == pygame.K_RIGHT:
+                    player.to_right = True
+                if event.key == pygame.K_UP:
+                    player.to_up = True
+                if event.key == pygame.K_DOWN:
+                    player.to_down = True
+                                        
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    player.to_left = False
+                if event.key == pygame.K_RIGHT:
+                    player.to_right = False
+                if event.key == pygame.K_UP:
+                    player.to_up = False
+                if event.key == pygame.K_DOWN:
+                    player.to_down = False 
+                    
     def run(self):
         pygame.init()
         pygame.display.set_caption('Coin collector')
@@ -82,11 +81,12 @@ class Game:
         player = Player(self.swidth//2-25, self.sheight-100, "robo.png")
         
         while True:
-            player.input_events(self.swidth, self.sheight)
+            self.input_events(player)
             
-            self.screen.fill((0, 0, 0))
+            self.screen.fill(self.color_black)
             
             # Draw player
+            player.move_player(self.swidth, self.sheight)
             self.screen.blit(player.image, player.rect)
             
             # TODO: NPC creation

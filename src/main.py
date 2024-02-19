@@ -19,7 +19,6 @@ class Game:
         self.sheight = 600
         self.fps = 120
         self.clock = pygame.time.Clock()
-        pygame.init()
         self.screen = pygame.display.set_mode((self.swidth, self.sheight))
         
     def game_events(self):
@@ -28,17 +27,18 @@ class Game:
                 exit()
     
     def run(self):
+        pygame.init()
+        
         while True:
             self.game_events()
-            // TODO: player events
+            # TODO: player events
             
-            // TODO: PLAYER creation
-            // TODO: NPC creation
+            # TODO: PLAYER creation
+            # TODO: NPC creation
             
-            // TODO: Coin creation
+            # TODO: Coin creation
             
-            // TODO: Collision detection
-            
+            # TODO: Collision detection
             
             self.screen.fill((0, 0, 0))
             pygame.display.flip()

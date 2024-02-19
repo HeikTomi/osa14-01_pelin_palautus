@@ -20,7 +20,6 @@ class Coin(Npc):
     def move_coin(self, maxwidth, maxheight):
         # move coin to random spot at the screen
         self.x = random.randrange(maxwidth-50)
-        
         rand_y = random.randrange(maxheight-50)
         if rand_y < 80:
             rand_y = 80
@@ -59,7 +58,7 @@ class Player(Npc):
         
     def check_coin_collision(self, coin, maxwidth, maxheight):
         if self.check_collision(coin.rect):
-            # Socre is based how fast you got to the coin countim 10seconds down to zero
+            # Score is based how fast you got to the coin counting from 20 seconds down to zero
             t1 = time.time()
             dt = t1-self.score_time
             score = 20-int(dt) 
@@ -68,7 +67,7 @@ class Player(Npc):
                 
             self.score += score
             self.counter += score
-            self.score_time = time.time() # rest timer
+            self.score_time = time.time() # reset timer
 
             if self.counter >= 100: # every 100 points you level up
                 self.level += 1
@@ -129,7 +128,7 @@ class Game:
                     self.player.to_down = False                   
     
     def create_monsters(self):
-         if len(self.monsters) < 5*self.player.level: # max 10 monsters per player level
+         if len(self.monsters) < 5*self.player.level: # max 5 monsters per player level
             if random.randint(1,100) < 2: # monster creation change 1% per cycle
                 # starting at the corners
                 random_dir = random.randint(1,4)

@@ -124,10 +124,13 @@ class Game:
                     
     def draw_panel(self):        
         text = self.panel_font.render(f"Level: {self.player.level}", True, (255, 0, 0))
-        self.screen.blit(text, (400, 0))
+        self.screen.blit(text, (25, 0))
         
-        text = self.panel_font.render(f"Scores: {self.player.score}", True, (255, 0, 0))
+        text = self.panel_font.render(f"Lives: {self.player.lives}", True, (255, 0, 0))
         self.screen.blit(text, (200, 0))
+            
+        text = self.panel_font.render(f"Scores: {self.player.score}", True, (255, 0, 0))
+        self.screen.blit(text, (400, 0))
         
         text = self.panel_font.render("Esc = end game", True, (255, 0, 0))
         self.screen.blit(text, (600, 0))
